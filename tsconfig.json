@@ -13,6 +13,9 @@
     "module": "nodenext",
     "types": ["node"],
 
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
     // Style Options
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,
