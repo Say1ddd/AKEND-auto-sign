@@ -1,12 +1,17 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node src/index.ts",
+    "dev": "node src/main.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
+  "dependencies": {
+    "zod": "^4.4.3"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^9.1.0",
+    "@types/node": "^26.1.1",
+    "dotenv": "^17.4.2",
     "eslint": "^10.7.0",
     "typescript": "^6.0.3"
   }
