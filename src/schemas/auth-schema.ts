@@ -19,7 +19,7 @@ export const CredentialResponseSchema = z.object({
   data: z.object({
     cred: z.string(),
     token: z.string(),
-    userId: z.number(),
+    userId: z.string(),
   }).optional(),
 })
 
