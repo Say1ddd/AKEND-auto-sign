@@ -1,8 +1,10 @@
 import type { z } from 'zod'
+import { USER_AGENT } from '../constants.ts'
+import { createApiSignature, createCredentialSignature } from './crypto/signer.ts'
 
 // avoiding generic inference because owner of zod states that the bug is unfixable
 // https://github.com/colinhacks/zod/issues/4877#issuecomment-3100124769
-export async function fetchJson<TSchema extends z.ZodType>(
+export async function fetchValidJson<TSchema extends z.ZodType>(
   schema: TSchema,
   input: RequestInfo | URL,
   init?: RequestInit,
@@ -15,4 +17,32 @@ export async function fetchJson<TSchema extends z.ZodType>(
   const json = await response.json()
 
   return schema.parse(json)
+}
+
+export function buildHeaders(
+  cred: string,
+  sign: string,
+  skGameRole: string,
+  timestamp: string,
+): HeadersInit {
+  return {
+    cred,
+    'sk-game-role': skGameRole,
+    'platform': '3',
+    'sk-language': 'en',
+    timestamp,
+    'vname': '1.0.0',
+    sign,
+    'User-Agent': USER_AGENT,
+    'Origin': 'https://game.skport.com',
+    'Referer': 'https://game.skport.com/',
+  }
+}
+
+export function buildSign(timestamp: string, path: string, cred?: string, salt?: string): string {
+  if (salt)
+    return createApiSignature(path, timestamp, salt)
+  if (cred)
+    return createCredentialSignature(timestamp, cred)
+  throw new Error('Neither cred nor salt provided for signing')
 }
