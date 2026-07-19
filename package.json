@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node src/index.ts",
+    "dev": "node src/main.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
