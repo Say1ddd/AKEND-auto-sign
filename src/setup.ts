@@ -16,7 +16,6 @@ export async function setup() {
     if (accountToken) {
       console.info('Refreshing OAuth credentials...')
 
-      decodeURIComponent(accountToken)
       const oauth = await getAuthData(accountToken)
       cred = oauth.cred
       salt = oauth.salt
