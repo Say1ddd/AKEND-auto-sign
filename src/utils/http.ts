@@ -31,7 +31,7 @@ export function buildHeaders(
     'platform': '3',
     'sk-language': 'en',
     timestamp,
-    'vname': '1.0.0',
+    'vName': '1.0.0',
     sign,
     'User-Agent': USER_AGENT,
     'Origin': 'https://game.skport.com',
