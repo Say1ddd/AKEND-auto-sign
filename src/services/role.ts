@@ -1,7 +1,6 @@
 import { BASE_URL } from '../constants.ts'
 import { PlayerBindingResponseSchema } from '../schemas/role-schema.ts'
-import { createApiSignature } from '../utils/crypto/signer.ts'
-import { buildHeaders, fetchValidJson } from '../utils/http.ts'
+import { buildHeaders, buildSign, fetchValidJson } from '../utils/http.ts'
 
 export async function getDefaultRole(
   cred: string,
@@ -43,13 +42,13 @@ async function fetchPlayerBinding(
   const endpoint = '/api/v1/game/player/binding'
   const bindingUrl = BASE_URL + endpoint
 
-  const sign = createApiSignature(endpoint, salt, timestamp)
+  const sign = buildSign(timestamp, endpoint, cred, salt)
 
   return fetchValidJson(
     PlayerBindingResponseSchema,
     bindingUrl,
     {
-      headers: buildHeaders(cred, sign, '', timestamp),
+      headers: buildHeaders(timestamp, cred, sign, ''),
     },
   )
 }

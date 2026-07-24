@@ -8,16 +8,16 @@ interface SignatureHeader {
 }
 
 export function createCredentialSignature(
-  cred: string,
   timestamp: string,
+  cred: string,
 ): string {
   return md5(`timestamp=${timestamp}&cred=${cred}`)
 }
 
 export function createApiSignature(
+  timestamp: string,
   path: string,
   salt: string,
-  timestamp: string,
 ): string {
   const header: SignatureHeader = {
     platform: '3',
