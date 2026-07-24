@@ -5,7 +5,7 @@ async function main() {
     await setup()
   }
   catch (e) {
-    console.error(`Initialization Error: ${e}`)
+    throw new Error(`Initialization Error: ${e}`)
   }
 }
 

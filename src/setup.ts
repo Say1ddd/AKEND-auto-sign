@@ -1,4 +1,4 @@
-import { BASE_URL, ENDPOINT } from './constants.ts'
+import { ENDPOINT } from './constants.ts'
 import { checkAttendanceStatus, claimAttendance } from './services/attendance.ts'
 import { getAuthData } from './services/auth.ts'
 import { getDefaultRole } from './services/role.ts'
@@ -6,7 +6,6 @@ import { buildHeaders, buildSign } from './utils/http.ts'
 import 'dotenv/config'
 
 const accountToken = process.env.ACCOUNT_TOKEN
-const timestamp = Math.floor(Date.now() / 1000).toString()
 
 export async function setup() {
   try {
@@ -28,9 +27,10 @@ export async function setup() {
       if (!role)
         throw new Error('Unable to determine game role.')
 
-      const sign = buildSign(timestamp, BASE_URL + ENDPOINT, cred, salt)
+      const timestamp = Math.floor(Date.now() / 1000).toString()
 
-      const headers = buildHeaders(cred, sign, role, timestamp)
+      const sign = buildSign(timestamp, ENDPOINT, cred, salt)
+      const headers = buildHeaders(timestamp, cred, sign, role)
 
       const status = await checkAttendanceStatus(headers)
 
@@ -38,23 +38,23 @@ export async function setup() {
         throw new Error(status.message)
 
       if (status.data.hasToday) {
-        console.info('Already signed in.')
+        throw new Error('Reward already claimed for today.')
       }
 
-      console.info('Claiming attendance...')
+      console.info('Today\'s reward hasn\'t been claimed, claiming...')
 
       const claim = await claimAttendance(headers)
 
       if (claim.code !== 0)
         throw new Error(claim.message)
 
-      console.info('Attendance claimed successfully.')
+      console.info('Reward claimed successfully.')
     }
     else {
-      console.error('ACCOUNT_TOKEN is not provided.')
+      throw new Error('ACCOUNT_TOKEN is not provided.')
     }
   }
   catch (e) {
-    console.error('Error:', e)
+    console.error('Setup Error:', e)
   }
 }
