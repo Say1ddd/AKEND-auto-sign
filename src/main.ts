@@ -1,11 +1,11 @@
-import { init } from './init.ts'
+import { setup } from './setup.ts'
 
 async function main() {
   try {
-    await init()
+    await setup()
   }
   catch (e) {
-    console.error(`Initialization Error: ${e}`)
+    throw new Error(`Initialization Error: ${e}`)
   }
 }
 

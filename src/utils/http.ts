@@ -20,18 +20,18 @@ export async function fetchValidJson<TSchema extends z.ZodType>(
 }
 
 export function buildHeaders(
+  timestamp: string,
   cred: string,
   sign: string,
   skGameRole: string,
-  timestamp: string,
-): HeadersInit {
+) {
   return {
     cred,
     'sk-game-role': skGameRole,
     'platform': '3',
     'sk-language': 'en',
     timestamp,
-    'vname': '1.0.0',
+    'vName': '1.0.0',
     sign,
     'User-Agent': USER_AGENT,
     'Origin': 'https://game.skport.com',
@@ -41,7 +41,7 @@ export function buildHeaders(
 
 export function buildSign(timestamp: string, path: string, cred?: string, salt?: string): string {
   if (salt)
-    return createApiSignature(path, timestamp, salt)
+    return createApiSignature(timestamp, path, salt)
   if (cred)
     return createCredentialSignature(timestamp, cred)
   throw new Error('Neither cred nor salt provided for signing')

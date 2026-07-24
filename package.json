@@ -1,5 +1,6 @@
 {
   "type": "module",
+  "private": "true",
   "scripts": {
     "dev": "node src/main.ts",
     "lint": "eslint",

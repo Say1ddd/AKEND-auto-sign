@@ -5,12 +5,15 @@ import {
   GrantResponseSchema,
 } from '../schemas/auth-schema.ts'
 import { fetchValidJson } from '../utils/http.ts'
+import { normalizeToken } from '../utils/normalize-token.ts'
 
 export async function getAuthData(accountToken: string) {
+  const token = normalizeToken(accountToken)
+
   const url = 'https://as.gryphline.com'
 
   const basicUrl = new URL(`${url}/user/info/v1/basic`)
-  basicUrl.searchParams.set('token', accountToken)
+  basicUrl.searchParams.set('token', token)
 
   const basicRes = await fetchValidJson(BasicInfoResponseSchema, basicUrl)
   if (basicRes.status !== 0)
@@ -27,7 +30,7 @@ export async function getAuthData(accountToken: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        token: accountToken,
+        token,
         appCode: X_APP_CODE,
         type: 0,
       }),
@@ -53,7 +56,6 @@ export async function getAuthData(accountToken: string) {
       }),
     },
   )
-
   if (cred.code !== 0 || !cred.data)
     throw new Error(cred.message)
 

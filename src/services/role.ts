@@ -1,25 +1,6 @@
 import { BASE_URL } from '../constants.ts'
 import { PlayerBindingResponseSchema } from '../schemas/role-schema.ts'
-import { createApiSignature } from '../utils/crypto/signer.ts'
-import { buildHeaders, fetchValidJson } from '../utils/http.ts'
-
-export async function fetchPlayerBinding(
-  cred: string,
-  salt: string,
-) {
-  const timestamp = Math.floor(Date.now() / 1000).toString()
-
-  const bindingUrl = new URL(`${BASE_URL}/api/v1/game/player/binding`)
-  const sign = createApiSignature(bindingUrl.toString(), salt, timestamp)
-
-  return fetchValidJson(
-    PlayerBindingResponseSchema,
-    bindingUrl,
-    {
-      headers: buildHeaders(cred, sign, '', timestamp),
-    },
-  )
-}
+import { buildHeaders, buildSign, fetchValidJson } from '../utils/http.ts'
 
 export async function getDefaultRole(
   cred: string,
@@ -50,4 +31,24 @@ export async function getDefaultRole(
     return null
 
   return `3_${role.roleId}_${role.serverId}`
+}
+
+async function fetchPlayerBinding(
+  cred: string,
+  salt: string,
+) {
+  const timestamp = Math.floor(Date.now() / 1000).toString()
+
+  const endpoint = '/api/v1/game/player/binding'
+  const bindingUrl = BASE_URL + endpoint
+
+  const sign = buildSign(timestamp, endpoint, cred, salt)
+
+  return fetchValidJson(
+    PlayerBindingResponseSchema,
+    bindingUrl,
+    {
+      headers: buildHeaders(timestamp, cred, sign, ''),
+    },
+  )
 }

@@ -2,12 +2,14 @@ import { BASE_URL, ENDPOINT } from '../constants.ts'
 import { AttendanceClaimSchema, AttendanceStatusSchema } from '../schemas/attendance-schema.ts'
 import { fetchValidJson } from '../utils/http.ts'
 
+const attendanceUrl = new URL(BASE_URL + ENDPOINT)
+
 export async function checkAttendanceStatus(
   headers: HeadersInit,
 ) {
   return fetchValidJson(
     AttendanceStatusSchema,
-    BASE_URL + ENDPOINT,
+    attendanceUrl,
     { headers },
   )
 }
@@ -17,7 +19,7 @@ export async function claimAttendance(
 ) {
   return fetchValidJson(
     AttendanceClaimSchema,
-    BASE_URL + ENDPOINT,
+    attendanceUrl,
     {
       method: 'POST',
       headers: {
