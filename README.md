@@ -1,11 +1,10 @@
 # Introduction
-Before started using this script, you will need to complete [setting up your own repository](https://github.com/Say1ddd/AKEND-auto-sign#setting-up-your-own-repository) and [setting up secrets](https://github.com/Say1ddd/AKEND-auto-sign#setting-up-secrets) which will be described in the steps below.
+Before started using this script, you will need to complete [setting up your own workflow](https://github.com/Say1ddd/AKEND-auto-sign#setting-up-your-own-workflow) and [setting up secrets](https://github.com/Say1ddd/AKEND-auto-sign#setting-up-secrets) which will be described in the steps below.
 
-## Setting Up Your Own Repository
+## Setting Up Your Own Workflow
 You must set up your own repository to have your own automatic workflow running, you can do so by doing one of the options below.
-
-### By Importing
-Import this repository by opening https://github.com/new/import then add this repositry's url as source repository.
+> [!WARNING]
+> Since this script is essentially a reverse engineer project, the api it used can change at any time. It is recommended to fork this repository to allow syncing with the latest changes by using the 'Sync Fork' button. 
 
 ### By Forking
 You can also fork this repository by opening https://github.com/Say1ddd/AKEND-auto-sign/fork or by clicking the 'fork' button.
@@ -13,8 +12,11 @@ You can also fork this repository by opening https://github.com/Say1ddd/AKEND-au
 > Github disables workflow from forks by default.
 > You can enable it by opening your fork repository's settings, then inside "Code, planning, and automation"'s `actions > general` and you should find an option that says "allow actions" or "enable actions".
 
+### By Importing
+Import this repository by opening https://github.com/new/import then add this repositry's url as source repository, be note that this method does not have syncing feature.
+
 ### By Cloning
-You can also use the clone function if you prefer. This is rather advanced, but I believed that you understand enough to do it yourself if you skipped both of the steps above.
+You can also use the clone function if you prefer. This is rather advanced, but I believed that you understand enough to do it yourself if you skipped all of the steps above.
 
 ## Setting Up Secrets
 > [!IMPORTANT]
