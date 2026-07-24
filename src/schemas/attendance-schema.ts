@@ -13,7 +13,7 @@ export const AttendanceClaimSchema = z.object({
   message: z.string(),
   data: z.object({
     awardIds: z.array(z.object({
-      id: z.number(),
+      id: z.string(),
     })),
     resourceInfoMap: z.record(
       z.string(),
